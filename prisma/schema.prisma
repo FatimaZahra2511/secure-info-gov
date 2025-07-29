@@ -1,0 +1,53 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Asset {
+  id             String   @id @default(uuid())
+  name           String
+  department     String
+  owner          String?
+  description        String?
+  origine         String?
+  destination     String?
+  formatPapier    Boolean
+  formatElectronique Boolean
+  dp             Boolean?              // Optional
+  cScore         Int
+  iScore         Int
+  aScore         Int
+  tScore         Int      @default(1)  // Traçabilité (required with default)
+  sensibilite    String?              // Optional but present
+  impactOp       Int?                 // Optional
+  impactConf     Int?                 // Optional
+  impactRep      Int?                 // Optional
+  impactFin      Int?                 // Optional
+  probabilite    Int?                 // Optional
+  exposition     Int?                 // Optional
+  attenuation    Int?                 // Optional
+  risqueBrut     Int?                 // Optional
+  risqueResiduel Int?                 // Optional
+  risqueAccepte  String?              // Optional
+  analyseRisque  String?
+  mesuresExistantes String?           // Optional
+  risk           String
+  classification String
+  fileName       String?               // Optional
+  fileUrl        String?               // Optional
+  processus String?
+  conformite       String?
+  createdAt      DateTime @default(now())
+}
+
+model Audit {
+  id        String   @id @default(uuid())
+  action    String
+  docId     String
+  nom       String?
+  timestamp DateTime @default(now())
+}

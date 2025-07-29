@@ -1,0 +1,7 @@
+-- AlterTable
+ALTER TABLE "Asset" ADD COLUMN "impactConf" INTEGER;
+ALTER TABLE "Asset" ADD COLUMN "impactFin" INTEGER;
+ALTER TABLE "Asset" ADD COLUMN "impactOp" INTEGER;
+ALTER TABLE "Asset" ADD COLUMN "impactRep" INTEGER;
+ALTER TABLE "Asset" ADD COLUMN "probabilite" INTEGER;
+ALTER TABLE "Asset" ADD COLUMN "sensibilite" TEXT;
