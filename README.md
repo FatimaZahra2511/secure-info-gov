@@ -115,7 +115,7 @@ Built by : [Fatima Zahra Zhiri](https://www.linkedin.com/in/fatima-zahra-zhiri-7
 git clone https://github.com/yourusername/secure-info-classification.git
 
 # 2. Navigate into it
-cd secure-info-classification
+cd secure-info-gov
 
 # 3. Install dependencies
 npm install
