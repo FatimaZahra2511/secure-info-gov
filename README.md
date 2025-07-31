@@ -105,6 +105,9 @@ Built with **Next.js** and **Tailwind CSS**, the system supports granular classi
 
 ---
 
+##  Contact
+
+Built by : [Fatima Zahra Zhiri](https://www.linkedin.com/in/fatima-zahra-zhiri-722046274/)  
 ## Running the Project Locally
 
 ```bash
@@ -121,6 +124,3 @@ npm install
 npm run dev
 ---
 
-##  Contact
-
-Built by **[Fatima Zahra Zhiri](https://www.linkedin.com/in/fatima-zahra-zhiri-722046274/)**  
