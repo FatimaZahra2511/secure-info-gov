@@ -2,6 +2,12 @@ import { NextResponse } from "next/server";
 
 // Toggle demo mode via env var (Vercel: set DEMO=1)
 const IS_DEMO = process.env.DEMO === "1";
+// Utility: generate ISO date "n days ago"
+function days(n) {
+  const d = new Date();
+  d.setDate(d.getDate() - n);
+  return d.toISOString();
+}
 
 // --- Demo dataset (shown when DEMO=1) ---
 const demoAssets = [
