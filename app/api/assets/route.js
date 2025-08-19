@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { getDemoAssets } from "@/app/demo/assets";
 
 // Toggle demo mode via env var (Vercel: set DEMO=1)
 const IS_DEMO = process.env.DEMO === "1";
@@ -75,17 +76,16 @@ export async function GET(request) {
     const id = url.searchParams.get("id");
 
     // DEMO MODE
-    if (IS_DEMO) {
-      if (id) {
-        const one = demoAssets.find((a) => a.id === id) || null;
-        return new Response(JSON.stringify(one), { status: 200 });
-      }
-      // sort newest first
-      const list = [...demoAssets].sort(
-        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-      );
-      return new Response(JSON.stringify(list), { status: 200 });
-    }
+if (IS_DEMO) {
+  const all = getDemoAssets();
+  if (id) {
+    const one = all.find((a) => a.id === id) || null;
+    return new Response(JSON.stringify(one), { status: 200 });
+  }
+  const list = all.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  return new Response(JSON.stringify(list), { status: 200 });
+}
+
 
     // REAL DB MODE
     const db = await getPrisma();
