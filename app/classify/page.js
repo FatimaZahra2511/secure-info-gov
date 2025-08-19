@@ -79,19 +79,21 @@ export default function PageDeClassification() {
     return 'Élevée';
   };
 
-  const calculateRiskFallback = (c, i, a) => {
-    const max = Math.max(clampScore(c), clampScore(i), clampScore(a));
-    if (max >= 4) return 'Élevé';
-    if (max >= 2) return 'Moyen';
-    return 'Faible';
-  };
+  const calculateRisque = (dp, classification) => {
+  if (dp && (classification === 'Très Confidentiel' || classification === 'Confidentiel')) return 'Élevé';
+  if (dp && classification === 'Interne') return 'Moyen';
+  if (!dp && classification === 'Très Confidentiel') return 'Moyen';
+  if (!dp && classification === 'Confidentiel') return 'Moyen';
+  return 'Faible';
+};
+
 
   const calculateAdvancedRisk = () => {
     const impacts = [impactOp, impactConf, impactRep, impactFin].map(clampScore);
     const prob = parseInt(probabilite);
     const totalImpact = impacts.reduce((acc, val) => acc + val, 0);
     const score = totalImpact * prob;
-    if (!prob || !totalImpact) return calculateRiskFallback(cScore, iScore, aScore);
+    if (!prob || !totalImpact) return calculateRisque(donneesPersonnelles, classification);
     if (score <= 33) return 'Faible';
     if (score <= 66) return 'Moyen';
     return 'Élevé';
@@ -177,7 +179,7 @@ export default function PageDeClassification() {
       analyseRisque,
       classification,
       sensibilite,
-      risk: niveauRisque,
+      risk: calculateRisque(donneesPersonnelles, classification),
       attenuation: parseInt(attenuation),
       risqueAccepte,
       mesuresExistantes,
@@ -306,7 +308,7 @@ const NavDropdown = () => {
         <option value="/processus">Portail des Processus</option>
         <option value="/classify">Classifier un Actif</option>
         <option value="/documents">Liste des Actifs</option>
-        <option value="/audit">Historique des aActions</option>
+        <option value="/audit">Historique des Actions</option>
         <option value="/dashboard">Tableau de Bord</option>
       </select>
     </div>
@@ -609,6 +611,7 @@ const NavDropdown = () => {
       ⚠️ <strong>Attention :</strong> Le risque résiduel est <strong>élevé</strong> mais a été marqué comme <strong>"Accepté"</strong>. Veuillez vérifier la décision.
     </div>
   )}
+
 </fieldset>
 
 

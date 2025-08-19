@@ -1,4 +1,4 @@
-export const dynamic = 'force-dynamic';
+
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
@@ -48,6 +48,11 @@ try {
       conformite: true,
       createdAt: true,
       processus: true,
+      description: true,
+      origine: true,
+      destination: true,
+      formatPapier: true,
+      formatElectronique: true,
     },
   });
 

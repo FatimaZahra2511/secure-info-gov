@@ -46,6 +46,15 @@ export default function AuditPage() {
     document.removeEventListener('visibilitychange', handleVisibility);
   };
 }, []);
+const filteredAuditTrail = auditTrail.filter((entry) => {
+  const matchesSearch =
+    entry.docId.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    entry.nom.toLowerCase().includes(searchTerm.toLowerCase());
+
+  const matchesAction = actionFilter === '' || entry.action === actionFilter;
+
+  return matchesSearch && matchesAction;
+});
 
   const exportCSV = () => {
     if (auditTrail.length === 0) return;
@@ -163,7 +172,8 @@ const NavDropdown = () => {
                 </tr>
               </thead>
               <tbody className="text-gray-900">
-                {auditTrail.map((entry, idx) => (
+                {filteredAuditTrail.map((entry, idx) => (
+
                   <tr
   key={entry.id}
   className={`${
@@ -191,16 +201,21 @@ const NavDropdown = () => {
   {entry.docId.slice(0, 8)}…
 </td>
 
-                    <td className="border p-2 max-w-xs break-words flex justify-between items-center">
-  {entry.nom}
-  <button
-    onClick={() => handleDeleteAudit(entry.id)}
-    className="text-red-600 hover:text-red-800 text-sm ml-2"
-    title="Supprimer"
-  >
-    🗑️
-  </button>
+                    <td className="border p-2 max-w-xs">
+  <div className="flex justify-between items-center gap-2">
+    <span className="truncate text-sm text-gray-800" title={entry.nom}>
+      {entry.nom}
+    </span>
+    <button
+      onClick={() => handleDeleteAudit(entry.id)}
+      className="text-red-600 hover:text-red-800 text-sm"
+      title="Supprimer"
+    >
+      🗑️
+    </button>
+  </div>
 </td>
+
 
                   </tr>
                 ))}

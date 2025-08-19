@@ -67,13 +67,15 @@ function calculateRisqueResiduel(risqueBrut, attenuation) {
       ? 'Conforme'
       : 'Non Conforme';
 
-  const calculateRisque = (dp, crit) => {
-    if (dp && (crit === 'Élevée' || crit === 'Moyenne')) return 'Élevé';
-    if (dp && crit === 'Faible') return 'Moyen';
-    if (!dp && crit === 'Élevée') return 'Moyen';
-    if (!dp && crit === 'Moyenne') return 'Moyen';
-    return 'Faible';
-  };
+  const calculateRisque = (dp, classification) => {
+  if (!classification) return 'Faible';
+  if (dp && ['Très Confidentiel', 'Confidentiel'].includes(classification)) return 'Élevé';
+  if (dp && classification === 'Interne') return 'Moyen';
+  if (!dp && classification === 'Très Confidentiel') return 'Moyen';
+  if (!dp && classification === 'Confidentiel') return 'Moyen';
+  return 'Faible';
+};
+
 
   // initial load
   useEffect(() => {
@@ -122,7 +124,7 @@ function calculateRisqueResiduel(risqueBrut, attenuation) {
         iScore: editedDoc.iScore,
         aScore: editedDoc.aScore,
         classification: editedDoc.classification,
-        risk: calculateRisque(editedDoc.owner, editedDoc.classification),
+        risk: calculateRisque(editedDoc.dp, editedDoc.classification),
         fileName: editedDoc.fileName,
         fileUrl: editedDoc.fileUrl,
         impactOp: editedDoc.impactOp,
@@ -208,7 +210,8 @@ const NavDropdown = () => {
         {!passwordValidated && (
           <button
             onClick={handlePassword}
-            className="mb-6 bg-blue-600 text-white px-4 py-2 rounded"
+            className="mb-6 bg-gray-700 hover:bg-gray-800 text-white px-4 py-2 rounded shadow transition"
+
           >
             Déverrouiller pour modifier
           </button>
