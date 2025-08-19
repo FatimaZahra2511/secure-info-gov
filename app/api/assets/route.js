@@ -228,7 +228,7 @@ const demoAssets = [
       analyseRisque: "Chiffrement au repos",
       mesuresExistantes: "Cloisonnement réseaux",
       risk: "Élevé",
-      classification: "Secret",
+      classification: "Interne",
       conformite: "Non Conforme",
       createdAt: days(25),
       processus: "Paie",
